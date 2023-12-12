@@ -1,0 +1,22 @@
+[default]
+# input_folder = import
+# output_folder = out
+author = John Smith
+# key = 123abc456def
+
+prompt_before = "Return raw json. do not return anything but json. Do not add markdown " +
+    "fences or whitespace. Process this image as a recipe, and convert to a " +
+    "JSON document conforming to the schema found at schema.org/recipe. Take " +
+    "the title from the image. Write a one sentence creative description. " +
+    "Attribute authorship to '"
+##
+# author variable inserted here
+##
+prompt_after = "'. Extract the number of servings " +
+    "from the document, then calculate nutrition facts based off ingredients, " +
+    "and add it to the final output. Do not explain the output, or add " +
+    "supporting documentation. only show the final result. Make sure there " +
+    "are no duplicate keys in the output. If there are any 'additional notes', " +
+    "append them to the recipeInstructions list. If any extracted text is " +
+    "in all caps, correct it to normal sentence casing. Convert metric " +
+    "weight measures to imperial."

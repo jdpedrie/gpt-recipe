@@ -1,5 +1,8 @@
-out
+out/*
+import/*
 .env
 .envrc
 .DS_Store
 images
+config.ini
+.vscode/
