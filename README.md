@@ -14,7 +14,7 @@ Usage:
 2. Set the `input_folder` variable to your image folder name (`./import` by default).
 3. Set the `output_folder` variable to your image folder name (`./out` by default).
 4. Set the `author` variable to any value (perhaps the author of the recipes
-   you're converting).
+   you're converting).  The value will be assigned to the recipe as a keyword.
 5. Set `key` to your OpenAI key.
 6. If generating from a PDF, convert each page to a JPG image. If you're
    using macOS, this is easy to do using [Automator](https://discussions.apple.com/thread/3311405).
