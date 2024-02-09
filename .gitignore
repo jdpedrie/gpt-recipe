@@ -6,3 +6,5 @@ import/*
 images
 config.ini
 .vscode/
+__pycache__/
+caches.*
