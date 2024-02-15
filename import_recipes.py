@@ -2,6 +2,7 @@ import json
 import os
 import shelve
 import time
+from uuid import NAMESPACE_OID, uuid3
 
 import configargparse
 
@@ -29,7 +30,6 @@ def reportError(msg, image, details):
     print(f"{image}: {msg}")
     print(details)
 
-
 args = parse_args()
 input_dir = args.input_folder
 output_dir = args.output_folder
@@ -39,11 +39,15 @@ RECIPE_FOOD = args.recipe_food
 
 try:
     caches = shelve.open('caches.db', writeback=True)
+    tandoor = str(uuid3(NAMESPACE_OID, args.tandoor_url))
+    if tandoor not in caches:
+        caches[tandoor]={}
+
 except FileNotFoundError:
     caches = {}
 
 for img_name in os.listdir(input_dir):
-    if img_name in caches:
+    if img_name in caches[tandoor]:
         print(f"Skipping {img_name}, recipe already created.")
         continue
 
@@ -61,7 +65,7 @@ for img_name in os.listdir(input_dir):
         json_data['data'] = json_data['data'].replace('[\n', '[')
         json_data['data'] = json_data['data'].replace('"\n','"')
         json_data['data'] = json_data['data'].replace("'", r"\u0027")
-        json_data['data'] = json_data['data'].replace(r"Park\u00ed\u00fur", r"'P\u00fcr\u2022bk\u00f6r Pear'")
+        json_data['data'] = json_data['data'].replace(r"Park\u00ed\u00fur", "Pur Likor")
         json_data['data'] = json_data['data'].replace('"title":', '"name":')
 
     success, recipe = api.get_recipe_from_json(json_data)
@@ -81,7 +85,10 @@ for img_name in os.listdir(input_dir):
 
     recipe["steps"][0]["file"] = image
 
-    success, response = api.create_recipe(recipe)
+    try:
+        success, response = api.create_recipe(recipe)
+    except Exception as e:
+        pass
     if not success:
         reportError('Failed to create recipe', img_name, response)
         continue
@@ -92,5 +99,5 @@ for img_name in os.listdir(input_dir):
             reportError('Failed to create recipe as food', img_name, response)
             continue
 
-    caches[img_name] = {'recipe': recipe['name']}
+    caches[tandoor][img_name] = {'recipe': recipe['name']}
     caches.sync()
