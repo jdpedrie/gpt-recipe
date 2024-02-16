@@ -23,7 +23,10 @@ class TandoorAPI:
         url = self.url + "recipe/"
         response = self.session.post(url, json=recipe, headers=self.headers)
         if response.status_code != 201:
-            return False, response.json()
+            if type(response) is dict:
+                return False, response.json()
+            else:
+                return False, response
         return True, response.json()
 
     def create_file(self, name, image):

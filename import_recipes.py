@@ -95,7 +95,10 @@ for img_name in os.listdir(input_dir):
         success = False
         print(e)
     if not success:
-        reportError('Failed to create recipe', img_name, response)
+        if type(response) is dict:
+            reportError('Failed to create recipe', img_name)
+        else:
+            reportError('Failed to create recipe', img_name, response)
         count += 1
         continue
     else:
