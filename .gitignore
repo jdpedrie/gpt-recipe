@@ -1,5 +1,10 @@
-out
+out/*
+import/*
 .env
 .envrc
 .DS_Store
 images
+config.ini
+.vscode/
+__pycache__/
+caches.*

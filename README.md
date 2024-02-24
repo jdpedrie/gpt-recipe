@@ -10,16 +10,17 @@ recipes (plus 10-15 test calls while I was building this script) for about
 nine dollars.
 
 Usage:
-1. Create a folder called "out".
-2. If generating from a PDF, convert each page to a JPG image. If you're
+1. Copy config.ini.template to config.ini.
+2. Set the `input_folder` variable to your image folder name (`./import` by default).
+3. Set the `output_folder` variable to your image folder name (`./out` by default).
+4. Set the `author` variable to any value (perhaps the author of the recipes
+   you're converting).  The value will be assigned to the recipe as a keyword.
+5. Set `key` to your OpenAI key.
+6. If generating from a PDF, convert each page to a JPG image. If you're
    using macOS, this is easy to do using [Automator](https://discussions.apple.com/thread/3311405).
-3. Remove any images that do not contain a recipe.
-4. Place all the images to be converted into a folder next to gpt.go.
-5. Set the `input_folder` variable to your image folder name.
-6. Set the `author` variable to any value (perhaps the author of the recipes
-   you're converting).
-7. Set `key` to your OpenAI key.
-8. Run the file by invoking `go run ./gpt.go`.
+7. Remove any images that do not contain a recipe.
+8. Place all the images to be converted into the `input_folder`.
+9. Run the file by invoking `go run ./gpt.go`.
 
 The Vision API is in preview at the time of this writing. Rate limits are
 low. Depending on the number of requests, you will hit these limits and start
